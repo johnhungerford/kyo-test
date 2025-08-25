@@ -9,10 +9,10 @@ Currently supported frameworks: scalatest, munit, utest, and zio-test
 To use kyo-test, add one of the following settings in build.sbt:
 
 ```sbt
-libraryDependencies += "io.github.johnhungerford" %% "kyo-test-scalatest" % "0.0.1" % Test
-libraryDependencies += "io.github.johnhungerford" %% "kyo-test-munit" % "0.0.1" % Test
-libraryDependencies += "io.github.johnhungerford" %% "kyo-test-utest" % "0.0.1" % Test
-libraryDependencies += "io.github.johnhungerford" %% "kyo-test-zio" % "0.0.1" % Test
+libraryDependencies += "io.github.johnhungerford" %% "kyo-test-scalatest" % "0.0.2" % Test
+libraryDependencies += "io.github.johnhungerford" %% "kyo-test-munit" % "0.0.2" % Test
+libraryDependencies += "io.github.johnhungerford" %% "kyo-test-utest" % "0.0.2" % Test
+libraryDependencies += "io.github.johnhungerford" %% "kyo-test-zio" % "0.0.2" % Test
 ```
 
 Scala.js is supported as well, so you can use `"io.github.johnhungerford" %%% "kyo-test-scalatest" ...` if needed.
