@@ -34,6 +34,22 @@ trait KyoZioTestApi extends KyoTestApiSync[Either[Any, TestResult]] with KyoTest
         )
     end runKyoSync
 
+    def runKyoSyncFailFast(effect: Any < (Assert & Memo & Abort[Any] & Sync))(using Frame): Either[Any, TestResult] =
+        import AllowUnsafe.embrace.danger
+
+        effect.handle(
+            KyoAssert.runFailingFast,
+            Memo.run,
+            Abort.run
+        ).map {
+            case Result.Success(v) => Right(v)
+            case Result.Failure(e) => Left(e)
+            case Result.Panic(thr) => Left(thr)
+        }.handle(
+            Sync.Unsafe.evalOrThrow
+        )
+    end runKyoSyncFailFast
+
     override def runKyoAsync(effect: Any < (Assert & Memo & Scope & Abort[Any] & Async))(using Frame): ZIO[Any, Any, TestResult] =
         ZIOs.run:
             effect.handle(
@@ -42,4 +58,13 @@ trait KyoZioTestApi extends KyoTestApiSync[Either[Any, TestResult]] with KyoTest
                 Memo.run
             )
     end runKyoAsync
+
+    def runKyoAsyncFailFast(effect: Any < (Assert & Memo & Scope & Abort[Any] & Async))(using Frame): ZIO[Any, Any, TestResult] =
+        ZIOs.run:
+            effect.handle(
+                KyoAssert.runFailingFast,
+                Scope.run,
+                Memo.run
+            )
+    end runKyoAsyncFailFast
 end KyoZioTestApi
