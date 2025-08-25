@@ -70,8 +70,7 @@ class KyoTest extends AnyFreeSpec with Matchers with KyoScalatestApi:
                             i  <- Var.get[Int]
                             _  <- Var.update[Int](_ + 1)
                             i2 <- Var.get[Int]
-                            _  <- assertKyo(i2 shouldBe i + 1)
-                            _  <- assertKyo(i2 == i + 1)
+                            _  <- assertKyo(i2 shouldBe i + 1) // *OR* assertKyo(i2 == i + 1)
                         yield ()
                 yield ()
     }
@@ -87,8 +86,7 @@ class KyoAsyncTest extends AsyncFreeSpec with Matchers with KyoScalatestApi:
                             i  <- Var.get[Int]
                             _  <- Var.update[Int](_ + 1)
                             i2 <- Var.get[Int]
-                            _  <- assertKyo(i2 shouldBe i + 1)
-                            _  <- assertKyo(i2 == i + 1)
+                            _  <- assertKyo(i2 shouldBe i + 1) // *OR* assertKyo(i2 == i + 1)
                         yield ()
                 yield ()
     }
@@ -115,7 +113,6 @@ class KyoTest extends TestSuite with KyoUtestApi:
                                     i  <- Var.get[Int]
                                     _  <- Var.update[Int](_ + 1)
                                     i2 <- Var.get[Int]
-                                    _  <- assertKyo(i2 shouldBe i + 1)
                                     _  <- assertKyo(i2 == i + 1)
                                 yield ()
                         yield ()
@@ -141,8 +138,8 @@ class KyoTest extends FunSuite with KyoMunitApi:
                             i  <- Var.get[Int]
                             _  <- Var.update[Int](_ + 1)
                             i2 <- Var.get[Int]
-                            _  <- assertKyo(i2 shouldBe i + 1)
                             _  <- assertKyo(i2 == i + 1)
+                            _  <- assertKyo(assertNotEquals(i2, i)) // Custom munit assertion
                         yield ()
                 yield ()
 ```
@@ -170,7 +167,6 @@ object KyoTest extends ZIOSpecDefault with KyoZioTestApi:
                                     i  <- Var.get[Int]
                                     _  <- Var.update[Int](_ + 1)
                                     i2 <- Var.get[Int]
-                                    _  <- assertKyo(i2 shouldBe i + 1)
                                     _  <- assertKyo(i2 == i + 1)
                                 yield ()
                         yield ()
@@ -185,7 +181,6 @@ object KyoTest extends ZIOSpecDefault with KyoZioTestApi:
                                     i  <- Var.get[Int]
                                     _  <- Var.update[Int](_ + 1)
                                     i2 <- Var.get[Int]
-                                    _  <- assertKyo(i2 shouldBe i + 1)
                                     _  <- assertKyo(i2 == i + 1)
                                 yield ()
                         yield ()
