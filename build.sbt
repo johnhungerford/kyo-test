@@ -172,11 +172,3 @@ lazy val `js-settings` = Seq(
     jsEnv                                       := new NodeJSEnv(NodeJSEnv.Config().withArgs(List("--max_old_space_size=5120"))),
     libraryDependencies += "io.github.cquiroz" %%% "scala-java-time" % "2.6.0"
 )
-
-// def scalacOptionToken(proposedScalacOption: ScalacOption) =
-//     scalacOptionTokens(Set(proposedScalacOption))
-
-// def scalacOptionTokens(proposedScalacOptions: Set[ScalacOption]) = Def.setting {
-//     val version = ScalaVersion.fromString(scalaVersion.value).right.get
-//     ScalacOptions.tokensForVersion(version, proposedScalacOptions)
-// }
