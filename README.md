@@ -105,17 +105,16 @@ class KyoTest extends TestSuite with KyoUtestApi:
         test("suite"):
             test("test"):
                 runKyoAsync:
-                    Choice.run:
-                        for
-                            i <- Choice.evalSeq(Range(0, 100))
-                            _ <- Var.run(i):
-                                for
-                                    i  <- Var.get[Int]
-                                    _  <- Var.update[Int](_ + 1)
-                                    i2 <- Var.get[Int]
-                                    _  <- assertKyo(i2 == i + 1)
-                                yield ()
-                        yield ()
+                    for
+                        i <- Choice.evalSeq(Range(0, 100))
+                        _ <- Var.run(i):
+                            for
+                                i  <- Var.get[Int]
+                                _  <- Var.update[Int](_ + 1)
+                                i2 <- Var.get[Int]
+                                _  <- assertKyo(i2 == i + 1)
+                            yield ()
+                    yield ()
 ```
 
 ### munit
@@ -130,18 +129,17 @@ import munit.*
 class KyoTest extends FunSuite with KyoMunitApi:
     test("test"):
         runKyoAsync:
-            Choice.run:
-                for
-                    i <- Choice.evalSeq(Range(0, 100))
-                    _ <- Var.run(i):
-                        for
-                            i  <- Var.get[Int]
-                            _  <- Var.update[Int](_ + 1)
-                            i2 <- Var.get[Int]
-                            _  <- assertKyo(i2 == i + 1)
-                            _  <- assertKyo(assertNotEquals(i2, i)) // Custom munit assertion
-                        yield ()
-                yield ()
+            for
+                i <- Choice.evalSeq(Range(0, 100))
+                _ <- Var.run(i):
+                    for
+                        i  <- Var.get[Int]
+                        _  <- Var.update[Int](_ + 1)
+                        i2 <- Var.get[Int]
+                        _  <- assertKyo(i2 == i + 1)
+                        _  <- assertKyo(assertNotEquals(i2, i)) // Custom munit assertion
+                    yield ()
+            yield ()
 ```
 
 ### zio-test
@@ -159,31 +157,29 @@ object KyoTest extends ZIOSpecDefault with KyoZioTestApi:
         suite("suite")(
             test("test")(
                 runKyoAsync:
-                    Choice.run:
-                        for
-                            i <- Choice.evalSeq(Range(0, 100))
-                            _ <- Var.run(i):
-                                for
-                                    i  <- Var.get[Int]
-                                    _  <- Var.update[Int](_ + 1)
-                                    i2 <- Var.get[Int]
-                                    _  <- assertKyo(i2 == i + 1)
-                                yield ()
-                        yield ()
+                    for
+                        i <- Choice.evalSeq(Range(0, 100))
+                        _ <- Var.run(i):
+                            for
+                                i  <- Var.get[Int]
+                                _  <- Var.update[Int](_ + 1)
+                                i2 <- Var.get[Int]
+                                _  <- assertKyo(i2 == i + 1)
+                            yield ()
+                    yield ()
             ),
             test("test failing fast")(
                 kyoRunAsyncFailFast:
-                    Choice.run:
-                        for
-                            i <- Choice.evalSeq(Range(0, 100))
-                            _ <- Var.run(i):
-                                for
-                                    i  <- Var.get[Int]
-                                    _  <- Var.update[Int](_ + 1)
-                                    i2 <- Var.get[Int]
-                                    _  <- assertKyo(i2 == i + 1)
-                                yield ()
-                        yield ()
+                    for
+                        i <- Choice.evalSeq(Range(0, 100))
+                        _ <- Var.run(i):
+                            for
+                                i  <- Var.get[Int]
+                                _  <- Var.update[Int](_ + 1)
+                                i2 <- Var.get[Int]
+                                _  <- assertKyo(i2 == i + 1)
+                            yield ()
+                    yield ()
             )
         )
 ```
