@@ -18,10 +18,11 @@ trait KyoZioTestApi extends KyoTestApiSync[Either[Any, TestResult]] with KyoTest
     override def assertKyo(assertion: => TestResult)(using f: Frame): Unit < Assert =
         KyoAssert.get(assertion)
 
-    override def runKyoSync(effect: Any < (Assert & Memo & Abort[Any] & Sync))(using Frame): Either[Any, TestResult] =
+    override def runKyoSync(effect: Any < (Assert & Choice & Memo & Abort[Any] & Sync))(using Frame): Either[Any, TestResult] =
         import AllowUnsafe.embrace.danger
 
         effect.handle(
+            Choice.run,
             KyoAssert.run,
             Memo.run,
             Abort.run
@@ -34,10 +35,11 @@ trait KyoZioTestApi extends KyoTestApiSync[Either[Any, TestResult]] with KyoTest
         )
     end runKyoSync
 
-    def runKyoSyncFailFast(effect: Any < (Assert & Memo & Abort[Any] & Sync))(using Frame): Either[Any, TestResult] =
+    def runKyoSyncFailFast(effect: Any < (Assert & Choice & Memo & Abort[Any] & Sync))(using Frame): Either[Any, TestResult] =
         import AllowUnsafe.embrace.danger
 
         effect.handle(
+            Choice.run,
             KyoAssert.runFailingFast,
             Memo.run,
             Abort.run
@@ -50,18 +52,20 @@ trait KyoZioTestApi extends KyoTestApiSync[Either[Any, TestResult]] with KyoTest
         )
     end runKyoSyncFailFast
 
-    override def runKyoAsync(effect: Any < (Assert & Memo & Scope & Abort[Any] & Async))(using Frame): ZIO[Any, Any, TestResult] =
+    override def runKyoAsync(effect: Any < (Assert & Choice & Memo & Scope & Abort[Any] & Async))(using Frame): ZIO[Any, Any, TestResult] =
         ZIOs.run:
             effect.handle(
+                Choice.run,
                 KyoAssert.run,
                 Scope.run,
                 Memo.run
             )
     end runKyoAsync
 
-    def runKyoAsyncFailFast(effect: Any < (Assert & Memo & Scope & Abort[Any] & Async))(using Frame): ZIO[Any, Any, TestResult] =
+    def runKyoAsyncFailFast(effect: Any < (Assert & Choice & Memo & Scope & Abort[Any] & Async))(using Frame): ZIO[Any, Any, TestResult] =
         ZIOs.run:
             effect.handle(
+                Choice.run,
                 KyoAssert.runFailingFast,
                 Scope.run,
                 Memo.run

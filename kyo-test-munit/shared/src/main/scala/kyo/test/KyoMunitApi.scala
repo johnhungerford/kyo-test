@@ -15,11 +15,12 @@ trait KyoMunitApi extends KyoTestApiSync[Unit] with KyoTestApiAsync[Future[Unit]
     override def assertKyo(assertion: => Any)(using f: Frame): Unit < Assert =
         KyoAssert.get(assertion)
 
-    override def runKyoSync(effect: Any < (Assert & Memo & Abort[Any] & Sync))(using Frame): Unit =
+    override def runKyoSync(effect: Any < (Assert & Choice & Memo & Abort[Any] & Sync))(using Frame): Unit =
         import AllowUnsafe.embrace.danger
 
         effect.handle(
             KyoAssert.run,
+            Choice.run,
             Memo.run,
             Abort.run[Any](_)
         ).map {
@@ -32,11 +33,12 @@ trait KyoMunitApi extends KyoTestApiSync[Unit] with KyoTestApiAsync[Future[Unit]
         )
     end runKyoSync
 
-    override def runKyoAsync(effect: Any < (Assert & Memo & Scope & Abort[Any] & Async))(using Frame): Future[Unit] =
+    override def runKyoAsync(effect: Any < (Assert & Choice & Memo & Scope & Abort[Any] & Async))(using Frame): Future[Unit] =
         import AllowUnsafe.embrace.danger
 
         effect.handle(
             KyoAssert.run,
+            Choice.run,
             Scope.run,
             Memo.run,
             Abort.run

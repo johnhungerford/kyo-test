@@ -21,9 +21,9 @@ Scala.js is supported as well, so you can use `"io.github.johnhungerford" %%% "k
 
 All bindings support the same basic API, which uses `runKyoSync` and `runKyoAsync` to convert kyo effects into native tests, and `assertKyo` to lift native assertions into a kyo effect. Assertions are lifted into a custom `Assert` effect type. 
 
-`runKyoSync` accepts effects of type `Any < (Assert & Memo & Abort[Any] & Sync)`.
+`runKyoSync` accepts effects of type `Any < (Assert & Choice & Memo & Abort[Any] & Sync)`.
 
-`runKyoAsync` accepts effects of type `Any < (Assert & Memo & Scope & Abort[Any] & Async)`.
+`runKyoAsync` accepts effects of type `Any < (Assert & Choice & Memo & Scope & Abort[Any] & Async)`.
 
 `assertKyo` can always be used for boolean assertions, such as `assertKyo(someValue == 2)`. Depending on the framework, it can also be used to lift custom assertions. For instance, the following can be used in scalatest: `assertKyo(someValue shouldBe 2)`. `assertKyo` returns `Unit < Assert` and can be composed with other kyo effects to construct a test.
 

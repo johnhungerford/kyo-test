@@ -16,12 +16,11 @@ object KyoZioTestApiSpec extends ZIOSpecDefault with KyoZioTestApi:
                             _  <- assertKyo(assertTrue(i2 == i + 1))
                             _  <- assertKyo(i2 == i + 1)
                         yield ()
-                    Choice.run:
-                        for
-                            i <- Choice.evalSeq(Range(0, 100))
-                            _ <- Var.run(i)(varEffect)
-                        yield ()
-                        end for
+                    for
+                        i <- Choice.evalSeq(Range(0, 100))
+                        _ <- Var.run(i)(varEffect)
+                    yield ()
+                    end for
             ),
             test("sync failing fast")(
                 runKyoSyncFailFast:
@@ -33,12 +32,11 @@ object KyoZioTestApiSpec extends ZIOSpecDefault with KyoZioTestApi:
                             _  <- assertKyo(assertTrue(i2 == i + 1))
                             _  <- assertKyo(i2 == i + 1)
                         yield ()
-                    Choice.run:
-                        for
-                            i <- Choice.evalSeq(Range(0, 100))
-                            _ <- Var.run(i)(varEffect)
-                        yield ()
-                        end for
+                    for
+                        i <- Choice.evalSeq(Range(0, 100))
+                        _ <- Var.run(i)(varEffect)
+                    yield ()
+                    end for
             ),
             test("async")(
                 runKyoAsync:
@@ -50,12 +48,11 @@ object KyoZioTestApiSpec extends ZIOSpecDefault with KyoZioTestApi:
                             _  <- assertKyo(assertTrue(i2 == i + 1))
                             _  <- assertKyo(i2 == i + 1)
                         yield ()
-                    Choice.run:
-                        for
-                            i <- Choice.evalSeq(Range(0, 100))
-                            _ <- Var.run(i)(varEffect)
-                        yield ()
-                        end for
+                    for
+                        i <- Choice.evalSeq(Range(0, 100))
+                        _ <- Var.run(i)(varEffect)
+                    yield ()
+                    end for
             ),
             test("async failing fast")(
                 runKyoAsyncFailFast:
@@ -67,12 +64,11 @@ object KyoZioTestApiSpec extends ZIOSpecDefault with KyoZioTestApi:
                             _  <- assertKyo(assertTrue(i2 == i + 1))
                             _  <- assertKyo(i2 == i + 1)
                         yield ()
-                    Choice.run:
-                        for
-                            i <- Choice.evalSeq(Range(0, 100))
-                            _ <- Var.run(i)(varEffect)
-                        yield ()
-                        end for
+                    for
+                        i <- Choice.evalSeq(Range(0, 100))
+                        _ <- Var.run(i)(varEffect)
+                    yield ()
+                    end for
             )
         )
     end spec

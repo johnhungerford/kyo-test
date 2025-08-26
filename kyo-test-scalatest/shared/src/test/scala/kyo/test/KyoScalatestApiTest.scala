@@ -17,12 +17,11 @@ class KyoScalatestApiSyncTest extends AnyFreeSpec with Matchers with KyoScalates
                     _  <- assertKyo(i2 shouldBe i + 1)
                     _  <- assertKyo(i2 == i + 1)
                 yield ()
-            Choice.run:
-                for
-                    i <- Choice.evalSeq(Range(0, 100))
-                    _ <- Var.run(i)(varEffect)
-                yield ()
-                end for
+            for
+                i <- Choice.evalSeq(Range(0, 100))
+                _ <- Var.run(i)(varEffect)
+            yield ()
+            end for
     }
 end KyoScalatestApiSyncTest
 
@@ -37,11 +36,10 @@ trait AbstractKyoScalatestApiAsyncTest extends AsyncFreeSpec with Matchers with 
                     _  <- assertKyo(i2 shouldBe i + 1)
                     _  <- assertKyo(i2 == i + 1)
                 yield ()
-            Choice.run:
-                for
-                    i <- Choice.evalSeq(Range(0, 100))
-                    _ <- Var.run(i)(varEffect)
-                yield ()
-                end for
+            for
+                i <- Choice.evalSeq(Range(0, 100))
+                _ <- Var.run(i)(varEffect)
+            yield ()
+            end for
     }
 end AbstractKyoScalatestApiAsyncTest

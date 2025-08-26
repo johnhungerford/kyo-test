@@ -15,12 +15,11 @@ class KyoMunitApiSyncTest extends FunSuite with KyoMunitApi:
                     _  <- assertKyo(assertEquals(i2, i + 1))
                     _  <- assertKyo(i2 == i + 1)
                 yield ()
-            Choice.run:
-                for
-                    i <- Choice.evalSeq(Range(0, 100))
-                    _ <- Var.run(i)(varEffect)
-                yield ()
-                end for
+            for
+                i <- Choice.evalSeq(Range(0, 100))
+                _ <- Var.run(i)(varEffect)
+            yield ()
+            end for
 end KyoMunitApiSyncTest
 
 class KyoScalatestApiAsyncTest extends FunSuite with KyoMunitApi:
@@ -34,10 +33,9 @@ class KyoScalatestApiAsyncTest extends FunSuite with KyoMunitApi:
                     _  <- assertKyo(assertEquals(i2, i + 1))
                     _  <- assertKyo(i2 == i + 1)
                 yield ()
-            Choice.run:
-                for
-                    i <- Choice.evalSeq(Range(0, 100))
-                    _ <- Var.run(i)(varEffect)
-                yield ()
-                end for
+            for
+                i <- Choice.evalSeq(Range(0, 100))
+                _ <- Var.run(i)(varEffect)
+            yield ()
+            end for
 end KyoScalatestApiAsyncTest

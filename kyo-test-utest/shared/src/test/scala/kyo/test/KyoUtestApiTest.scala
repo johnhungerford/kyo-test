@@ -15,12 +15,11 @@ class KyoUtestApiSyncTest extends TestSuite with KyoUtestApi:
                         _  <- assertKyo(assertMatch(i2) { case j: Int if j == i + 1 => () })
                         _  <- assertKyo(i2 == i + 1)
                     yield ()
-                Choice.run:
-                    for
-                        i <- Choice.evalSeq(Range(0, 100))
-                        _ <- Var.run(i)(varEffect)
-                    yield ()
-                    end for
+                for
+                    i <- Choice.evalSeq(Range(0, 100))
+                    _ <- Var.run(i)(varEffect)
+                yield ()
+                end for
     }
 end KyoUtestApiSyncTest
 
@@ -36,11 +35,10 @@ class KyoUtestApiAsyncTest extends TestSuite with KyoUtestApi:
                         _  <- assertKyo(assertMatch(i2) { case j: Int if j == i + 1 => () })
                         _  <- assertKyo(i2 == i + 1)
                     yield ()
-                Choice.run:
-                    for
-                        i <- Choice.evalSeq(Range(0, 100))
-                        _ <- Var.run(i)(varEffect)
-                    yield ()
-                    end for
+                for
+                    i <- Choice.evalSeq(Range(0, 100))
+                    _ <- Var.run(i)(varEffect)
+                yield ()
+                end for
     }
 end KyoUtestApiAsyncTest
