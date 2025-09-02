@@ -65,6 +65,13 @@ Global / onLoad := {
 lazy val root = project
     .in(file("."))
     .aggregate(
+        JVM,
+        JS,
+    )
+
+lazy val JVM = project
+    .in(file("aggregates/jvm"))
+    .aggregate(
         `kyo-test`.jvm,
         `kyo-test-scalatest`.jvm,
         `kyo-test-zio`.jvm,
@@ -73,7 +80,7 @@ lazy val root = project
     )
 
 lazy val JS = project
-    .in(file("js"))
+    .in(file("aggregates/js"))
     .aggregate(
         `kyo-test`.js,
         `kyo-test-scalatest`.js,

@@ -9,10 +9,10 @@ Currently supported frameworks: scalatest, munit, utest, and zio-test
 To use kyo-test, add one of the following settings in build.sbt:
 
 ```sbt
-libraryDependencies += "io.github.johnhungerford" %% "kyo-test-scalatest" % "0.0.2" % Test
-libraryDependencies += "io.github.johnhungerford" %% "kyo-test-munit" % "0.0.2" % Test
-libraryDependencies += "io.github.johnhungerford" %% "kyo-test-utest" % "0.0.2" % Test
-libraryDependencies += "io.github.johnhungerford" %% "kyo-test-zio" % "0.0.2" % Test
+libraryDependencies += "io.github.johnhungerford" %% "kyo-test-scalatest" % "0.0.4" % Test
+libraryDependencies += "io.github.johnhungerford" %% "kyo-test-munit" % "0.0.4" % Test
+libraryDependencies += "io.github.johnhungerford" %% "kyo-test-utest" % "0.0.4" % Test
+libraryDependencies += "io.github.johnhungerford" %% "kyo-test-zio" % "0.0.4" % Test
 ```
 
 Scala.js is supported as well, so you can use `"io.github.johnhungerford" %%% "kyo-test-scalatest" ...` if needed.
@@ -62,17 +62,16 @@ import org.scalatest.matchers.should.*
 class KyoTest extends AnyFreeSpec with Matchers with KyoScalatestApi:
     "suite" - {
         "test" in runKyoSync:
-            Choice.run:
-                for
-                    i <- Choice.evalSeq(Range(0, 100))
-                    _ <- Var.run(i):
-                        for
-                            i  <- Var.get[Int]
-                            _  <- Var.update[Int](_ + 1)
-                            i2 <- Var.get[Int]
-                            _  <- assertKyo(i2 shouldBe i + 1) // *OR* assertKyo(i2 == i + 1)
-                        yield ()
-                yield ()
+            for
+                i <- Choice.evalSeq(Range(0, 100))
+                _ <- Var.run(i):
+                    for
+                        i  <- Var.get[Int]
+                        _  <- Var.update[Int](_ + 1)
+                        i2 <- Var.get[Int]
+                        _  <- assertKyo(i2 shouldBe i + 1) // *OR* assertKyo(i2 == i + 1)
+                    yield ()
+            yield ()
     }
 
 class KyoAsyncTest extends AsyncFreeSpec with Matchers with KyoScalatestApi:
